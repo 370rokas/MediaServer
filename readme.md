@@ -5,12 +5,12 @@
 
 **Description:** A simple **UNFINISHED** Media Server written in C++.
 
-## Dependencies
+## 🔨 Dependencies
 ```shell
 $ SQLite3
 ```
 
-## Installation
+## 🔧 Installation
 ### Build using CMake
 ```shell
 # Download the repository
@@ -27,3 +27,17 @@ $ cmake .
 ```
 ### Use pre-built binaries
 Pre-built binaries of stable versions will be available in the Releases section of the GitHub repository.
+
+## ✨ Usage
+```shell
+# Run the executable file
+$ ./WuseMediaServer.exe
+```
+
+
+## 🤝 Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+## 📝 License
+This project is licensed under the [MIT license](license.md).
