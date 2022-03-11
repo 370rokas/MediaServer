@@ -1,2 +1,4 @@
 /build/
 /cmake-build-debug/
+/external/
+/.idea/discord.xml
