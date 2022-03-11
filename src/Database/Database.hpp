@@ -11,12 +11,12 @@
 
 class Database {
     public:
-        void Initialize(std::string filename);
+        void Initialize(const std::string& filename);
         bool GetInitializationState();
         std::string GetInitializationMessage();
 
-        std::pair<bool, std::vector<std::string>> Query(std::string Query);
-        bool ExecMultiple(std::string Query);
+        std::pair<bool, std::vector<std::string>> Query(const std::string& Query);
+        bool ExecMultiple(const std::string& Query);
 
         std::string GetLastError();
         void Close();

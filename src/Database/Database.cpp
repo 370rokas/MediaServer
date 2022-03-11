@@ -7,15 +7,15 @@
 #include <fstream>
 
 std::string ConstCharPtrToString(const char* Source) {
-    return std::string(reinterpret_cast<const char*>(Source));
+    return reinterpret_cast<const char*>(Source);
 }
 
-std::pair<bool, std::vector<std::string>> Database::Query(std::string Query) {
+std::pair<bool, std::vector<std::string>> Database::Query(const std::string& Query) {
     std::vector<std::string> Results;
     sqlite3_stmt* Statement;
-    int ReturnCode = 0;
+    int ReturnCode;
 
-    if (sqlite3_prepare_v2(db, Query.c_str(), -1, &Statement, NULL) != SQLITE_OK) {
+    if (sqlite3_prepare_v2(db, Query.c_str(), -1, &Statement, nullptr) != SQLITE_OK) {
         LastError = "Failed to compile query: " + Query + "\n" + ConstCharPtrToString(sqlite3_errmsg(db));
         return std::make_pair(false, Results);
     }
@@ -35,10 +35,10 @@ std::pair<bool, std::vector<std::string>> Database::Query(std::string Query) {
     return std::make_pair(true, Results);
 }
 
-bool Database::ExecMultiple(std::string Query) {
+bool Database::ExecMultiple(const std::string& Query) {
     int ReturnCode = 0;
 
-    if (SQLITE_OK != (ReturnCode = sqlite3_exec(db, Query.c_str(), NULL, 0, NULL))) {
+    if (SQLITE_OK != (ReturnCode = sqlite3_exec(db, Query.c_str(), nullptr, nullptr, nullptr))) {
         std::cout << "Fail. " << ReturnCode << " amogus: " << sqlite3_errmsg(db) << std::endl;
 
         LastError = "Failed to execute query: " + Query + ", with ReturnCode: " + std::to_string(ReturnCode) + "\n" + ConstCharPtrToString(sqlite3_errmsg(db));
@@ -47,7 +47,7 @@ bool Database::ExecMultiple(std::string Query) {
     return true;
 }
 
-void Database::Initialize(std::string filename) {
+void Database::Initialize(const std::string& filename) {
     if(sqlite3_open(filename.c_str(), &db)) {
         InitializationState = false;
         InitializationMessage = sqlite3_errmsg(db);
@@ -58,7 +58,7 @@ void Database::Initialize(std::string filename) {
     }
 
     auto TableQuery = Query("SELECT * FROM sqlite_master where type='table'");
-    if (TableQuery.first == false) {
+    if (!TableQuery.first) {
         InitializationState = false;
         InitializationMessage = GetLastError();
 
@@ -66,7 +66,7 @@ void Database::Initialize(std::string filename) {
         return;
     }
 
-    if (TableQuery.second.size() == 0) {
+    if (TableQuery.second.empty()) {
         std::ifstream QueryFile("Queries/Initialization.sql");
         if (!QueryFile.is_open()) {
             InitializationState = false;
@@ -77,17 +77,14 @@ void Database::Initialize(std::string filename) {
         }
 
         std::string RawQuery((std::istreambuf_iterator<char>(QueryFile)), std::istreambuf_iterator<char>());
-
         auto CreateTableQuery = ExecMultiple(RawQuery);
-        if (CreateTableQuery == false) {
+        if (!CreateTableQuery) {
             InitializationState = false;
             InitializationMessage = GetLastError();
             std::cout << GetLastError() << std::endl;
 
             Close();
             return;
-        } else {
-            std::cout <<"success what"<< std::endl;
         }
     }
 }
