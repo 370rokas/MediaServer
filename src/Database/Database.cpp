@@ -39,8 +39,6 @@ bool Database::ExecMultiple(const std::string& Query) {
     int ReturnCode = 0;
 
     if (SQLITE_OK != (ReturnCode = sqlite3_exec(db, Query.c_str(), nullptr, nullptr, nullptr))) {
-        std::cout << "Fail. " << ReturnCode << " amogus: " << sqlite3_errmsg(db) << std::endl;
-
         LastError = "Failed to execute query: " + Query + ", with ReturnCode: " + std::to_string(ReturnCode) + "\n" + ConstCharPtrToString(sqlite3_errmsg(db));
         return false;
     }
