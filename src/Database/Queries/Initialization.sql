@@ -1,9 +1,25 @@
-CREATE TABLE TESTTABLE (
-    ID INT PRIMARY KEY NOT NULL,
-    NAME TEXT NOT NULL
+CREATE TABLE `Albums` (
+    `id` int PRIMARY KEY,
+    `name` string,
+    `artist` string,
+    `tags` string
 );
 
-CREATE TABLE TEST_TABLE (
-    ID INT PRIMARY KEY NOT NULL,
-    NAME TEXT2 NOT NULL
+CREATE TABLE `Song` (
+    `id` int PRIMARY KEY,
+    `name` string NOT NULL,
+    `file_id` int NOT NULL
+);
+
+CREATE TABLE `Movies` (
+    `id` int PRIMARY KEY,
+    `name` string NOT NULL,
+    `tags` string NOT NULL,
+    `file_id` int NOT NULL
+);
+
+CREATE TABLE `Files` (
+    `file_id` int PRIMARY KEY,
+    `location` string NOT NULL,
+    `filename` string NOT NULL
 );
