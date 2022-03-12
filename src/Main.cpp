@@ -20,7 +20,8 @@ int main() {
         return 1;
     }
 
-    DB::CreateFile(db, "config.json", Settings.at("FileStorageLocation").get_string());
+    auto CreatedFile = DB::CreateFile(db, "config.json", Settings.at("FileStorageLocation").get_string());
+    std::cout << CreatedFile.second << std::endl;
 
     while (run) {
         std::string input;

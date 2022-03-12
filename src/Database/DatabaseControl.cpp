@@ -39,7 +39,7 @@ static std::string random_id(std::size_t len)
     return uuid;
 }
 
-std::pair<DBActionState, int> DB::CreateFile(Database db, std::string Path, std::string Location) {
+std::pair<DBActionState, int> DB::CreateFile(Database db, const std::string& Path, const std::string& Location) {
     const path FilePath = Path;
     const path FileDestination = Location;
 
@@ -52,26 +52,28 @@ std::pair<DBActionState, int> DB::CreateFile(Database db, std::string Path, std:
     }
 
     if (!exists(FileDestination)) {
-        std::cout << "create dir" << std::endl;
         if (!create_directories(FileDestination)) {
             return make_pair(DBActionState::FileError, 0);
         }
     }
 
-
-    std::string NewFilename = random_id(36) + FilePath.extension().string();
-    path CopiedFile = Location + NewFilename;
-
-    copy(FilePath, CopiedFile);
-    std::cout << "copied. " << CopiedFile.string() << std::endl;
-
-    std::string SQLQuery = "INSERT INTO Files (location, filename) VALUES ('"+FilePath.string()+"','"+NewFilename+"');";
-    if (!db.ExecMultiple(SQLQuery)) {
-        std::cout << db.GetLastError() << std::endl;
+    std::string NewFilename;
+    while (NewFilename.empty()) {
+        path GeneratedFilename = random_id(36) + FilePath.extension().string();
+        if (!exists(GeneratedFilename)) {
+            NewFilename = GeneratedFilename.string();
+        }
     }
 
-    int FileID = db.GetLastInsertRowId();
+    path CopiedFile = Location + NewFilename;
+    copy(FilePath, CopiedFile);
 
-    std::cout << FileID << std::endl;
-    return make_pair(DBActionState::Success, FileID);
+    std::string SQLQuery = "INSERT INTO Files (location, filename) VALUES ('"+FileDestination.string()+"','"+NewFilename+"');";
+    if (!db.ExecMultiple(SQLQuery)) {
+        return make_pair(DBActionState::SQLError, 0);
+    }
+
+    auto Results = db.GetValueByRowId("Files", db.GetLastInsertRowId(), "file_id");
+
+    return make_pair(DBActionState::Success, std::stoi(Results));
 }

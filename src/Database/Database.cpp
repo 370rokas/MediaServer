@@ -122,3 +122,15 @@ void Database::Close() {
     sqlite3_close(db);
 }
 
+std::string Database::GetValueByRowId(std::string Table, long long int RowId, std::string Value) {
+    if (!InitializationState) {
+        return "";
+    }
+
+    std::string SQLQuery = "SELECT " + Value + " FROM " + Table + " WHERE rowid = " + std::to_string(RowId) + ";";
+
+    auto QueryResults = Query(SQLQuery);
+
+    return QueryResults.second.front();
+}
+

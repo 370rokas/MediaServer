@@ -19,6 +19,7 @@ CREATE TABLE `Movies` (
 );
 
 CREATE TABLE `Files` (
+    `file_id` INTEGER PRIMARY KEY AUTOINCREMENT,
     `location` string NOT NULL,
     `filename` string NOT NULL
 );

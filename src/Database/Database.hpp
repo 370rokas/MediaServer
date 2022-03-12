@@ -18,6 +18,7 @@ class Database {
         std::pair<bool, std::vector<std::string>> Query(const std::string& Query);
         bool ExecMultiple(const std::string& Query);
         long long GetLastInsertRowId();
+        std::string GetValueByRowId(std::string Table, long long RowId, std::string Value);
 
         std::string GetLastError();
         void Close();
