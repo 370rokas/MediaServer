@@ -13,7 +13,11 @@ std::string ConstCharPtrToString(const char* Source) {
 std::pair<bool, std::vector<std::string>> Database::Query(const std::string& Query) {
     std::vector<std::string> Results;
     sqlite3_stmt* Statement;
-    int ReturnCode;
+    int ReturnCode = 0;
+
+    if (!InitializationState) {
+        return std::make_pair(false, Results);
+    }
 
     if (sqlite3_prepare_v2(db, Query.c_str(), -1, &Statement, nullptr) != SQLITE_OK) {
         LastError = "Failed to compile query: " + Query + "\n" + ConstCharPtrToString(sqlite3_errmsg(db));
@@ -37,6 +41,10 @@ std::pair<bool, std::vector<std::string>> Database::Query(const std::string& Que
 
 bool Database::ExecMultiple(const std::string& Query) {
     int ReturnCode = 0;
+
+    if (!InitializationState) {
+        return ReturnCode;
+    }
 
     if (SQLITE_OK != (ReturnCode = sqlite3_exec(db, Query.c_str(), nullptr, nullptr, nullptr))) {
         LastError = "Failed to execute query: " + Query + ", with ReturnCode: " + std::to_string(ReturnCode) + "\n" + ConstCharPtrToString(sqlite3_errmsg(db));
@@ -79,7 +87,6 @@ void Database::Initialize(const std::string& filename) {
         if (!CreateTableQuery) {
             InitializationState = false;
             InitializationMessage = GetLastError();
-            std::cout << GetLastError() << std::endl;
 
             Close();
             return;
@@ -99,6 +106,19 @@ std::string Database::GetLastError() {
     return LastError;
 }
 
+long long Database::GetLastInsertRowId() {
+    long long RowId = 0;
+
+    if (!InitializationState) {
+        return RowId;
+    }
+
+    RowId = sqlite3_last_insert_rowid(db);
+    return RowId;
+}
+
+
 void Database::Close() {
     sqlite3_close(db);
 }
+

@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "Config.hpp"
-#include "Database/Database.hpp"
+#include "Database/DatabaseControl.hpp"
 
 bool run = true;
 
@@ -19,6 +19,8 @@ int main() {
         std::cout << "Failed opening database: " << db.GetInitializationMessage() << std::endl;
         return 1;
     }
+
+    DB::CreateFile(db, "config.json", Settings.at("FileStorageLocation").get_string());
 
     while (run) {
         std::string input;

@@ -16,7 +16,8 @@ class Config {
     private:
         std::string DefaultConfig =
 R""""({
-    "DatabaseFile":"Database.db"
+    "DatabaseFile":"Database.db",
+    "FileStorageLocation":"FileStorage/"
 })"""";
         std::string Path;
 };

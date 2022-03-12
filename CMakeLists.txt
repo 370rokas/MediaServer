@@ -38,12 +38,13 @@ endif()
 set(WuseMediaServer_Sources
         "src/Main.cpp"
         "src/Config.cpp"
-        "src/Database/Database.cpp")
+        "src/Database/Database.cpp"
+        "src/Database/DatabaseControl.cpp")
 
-add_executable(WuseMediaServer ${WuseMediaServer_Sources})
+add_executable(WuseMediaServer ${WuseMediaServer_Sources} "src/Database/DatabaseControl.cpp")
 
 target_link_libraries(WuseMediaServer ${SQLite3_LIBRARIES} taocpp-json)
-target_include_directories(WuseMediaServer PRIVATE ${SQLite3_INCLUDE_DIRS})
+target_include_directories(WuseMediaServer PRIVATE ${SQLite3_INCLUDE_DIRS} include/)
 
 set_target_properties(WuseMediaServer PROPERTIES
         LIBRARY_OUTPUT_DIRECTORY "${BUILD_LOCATION}"
