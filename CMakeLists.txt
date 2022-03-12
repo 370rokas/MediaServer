@@ -18,6 +18,14 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(taocpp)
 # ---- taocpp-json
 
+# ---- LUA
+FetchContent_Declare(
+        lua
+        GIT_REPOSITORY https://github.com/walterschell/Lua
+)
+FetchContent_MakeAvailable(lua)
+# ---- LUA
+
 # ---- SQLite3
 message(CHECK_START "Looking for SQLite3")
 
@@ -43,7 +51,7 @@ set(WuseMediaServer_Sources
 
 add_executable(WuseMediaServer ${WuseMediaServer_Sources} "src/Database/DatabaseControl.cpp")
 
-target_link_libraries(WuseMediaServer ${SQLite3_LIBRARIES} taocpp-json)
+target_link_libraries(WuseMediaServer ${SQLite3_LIBRARIES} taocpp-json lua_static)
 target_include_directories(WuseMediaServer PRIVATE ${SQLite3_INCLUDE_DIRS} include/)
 
 set_target_properties(WuseMediaServer PROPERTIES

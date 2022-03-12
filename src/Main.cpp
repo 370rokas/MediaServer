@@ -1,5 +1,7 @@
 #include <iostream>
 
+#include <lua.hpp>
+
 #include "Config.hpp"
 #include "Database/DatabaseControl.hpp"
 
@@ -7,6 +9,9 @@ bool run = true;
 
 int main() {
     using namespace tao;
+
+    lua_State *L = luaL_newstate();
+    luaL_openlibs(L);
 
     Config configuration;
     configuration.Open("config.json");
@@ -23,12 +28,20 @@ int main() {
     auto CreatedFile = DB::CreateFile(db, "config.json", Settings.at("FileStorageLocation").get_string());
     std::cout << CreatedFile.second << std::endl;
 
+    int err;
     while (run) {
         std::string input;
         std::cin >> input;
 
-        if (input == "exit") run=false;
+        if (input == "exit") {run = false;} else {
+            err = luaL_loadstring(L, input.c_str()) || lua_pcall(L, 0, 0, 0);
+            if (err) {
+                std::cout << lua_tostring(L, -1) << std::endl;
+                lua_pop(L, 1);
+            }
+        }
     }
 
+    lua_close(L);
     return 0;
 }
