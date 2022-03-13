@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Main" pattern="!file[WuseMediaServer]:.idea/*&amp;&amp;!file[WuseMediaServer]:cmake-build-debug/*&amp;&amp;!file[WuseMediaServer]:cmake-build-debug//*&amp;&amp;!file[WuseMediaServer]:.idea//*&amp;&amp;!file[WuseMediaServer]:build//*&amp;&amp;!file[WuseMediaServer]:.github//*&amp;&amp;!ext:*/" />
+</component>
