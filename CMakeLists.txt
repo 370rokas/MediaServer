@@ -3,11 +3,25 @@ project(WuseMediaServer)
 
 #### Configuration
 
+option(BUILD_TESTS "Build test programs" OFF)
 set(BUILD_LOCATION ${PROJECT_SOURCE_DIR}/build)
 set(CMAKE_CXX_STANDARD 20)
 
 #### Dependencies
 include(FetchContent)
+
+# ---- GTest
+FetchContent_Declare(
+        googletest
+        URL https://github.com/google/googletest/archive/609281088cfefc76f9d0ce82e1ff6c30cc3591e5.zip
+)
+
+if(WIN32)
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+endif()
+
+FetchContent_MakeAvailable(googletest)
+# ---- GTest
 
 # ---- taocpp-json
 FetchContent_Declare(
@@ -74,3 +88,12 @@ add_custom_command(TARGET WuseMediaServer POST_BUILD
 add_custom_command(TARGET WuseMediaServer POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${CMAKE_SOURCE_DIR}/src/Database/Queries/ ${BUILD_LOCATION}/Queries/)
+
+#### Tests
+
+if(BUILD_TESTS)
+    enable_testing()
+    include(GoogleTest)
+
+    add_subdirectory(tests)
+endif()
