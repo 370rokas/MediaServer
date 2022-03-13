@@ -16,7 +16,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - uses: openrndr/setup-opengl@v1.1
+    - name: install dependencies
+      run: |
+        sudo apt-get install ninja-build -y
+        sudo apt-get install xorg-dev
+        sudo apt-get install freeglut3-dev
 
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
