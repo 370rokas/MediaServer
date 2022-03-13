@@ -1,5 +1,6 @@
 # Media Server
 ![Cmake-Ubuntu](https://github.com/370rokas/MediaServer/actions/workflows/cmake-ubuntu.yml/badge.svg)
+![Cmake-Windows](https://github.com/370rokas/MediaServer/actions/workflows/cmake-windows.yml/badge.svg)
 
 **Author:** 370rokas
 
