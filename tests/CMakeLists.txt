@@ -16,4 +16,5 @@ macro(package_add_test TESTNAME)
     set_target_properties(${TESTNAME} PROPERTIES FOLDER tests)
 endmacro()
 
-package_add_test(test1 test1.cpp)
+package_add_test(ConfigTests ConfigTests.cpp ${PROJECT_SOURCE_DIR}/src/Config.cpp)
+target_link_libraries(ConfigTests taocpp-json)

@@ -1,5 +1,6 @@
 # Media Server
 ![Cmake-Ubuntu](https://github.com/370rokas/MediaServer/actions/workflows/cmake-ubuntu.yml/badge.svg)
+![CodeCov-Master](https://codecov.io/gh/370rokas/MediaServer/branch/master/graph/badge.svg)
 
 **Author:** 370rokas
 
