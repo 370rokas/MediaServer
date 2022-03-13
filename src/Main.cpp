@@ -6,8 +6,6 @@
 #include "GUI/Console.hpp"
 #include "Database/DatabaseControl.hpp"
 
-bool* run_cli = new bool(true);
-
 int main() {
     using namespace tao;
 
@@ -31,24 +29,6 @@ int main() {
 
     Console console;
     console.Run();
-    /*int err;
-
-    Console console;
-    console.RunConsole(run_cli);
-
-    while (run_cli) {};
-    while (run_cli) {
-        std::string input;
-        std::cin >> input;
-
-        if (input == "exit") {run = false;} else {
-            err = luaL_loadstring(L, input.c_str()) || lua_pcall(L, 0, 0, 0);
-            if (err) {
-                std::cout << lua_tostring(L, -1) << std::endl;
-                lua_pop(L, 1);
-            }
-        }
-    }*/
 
     lua_close(L);
 }
