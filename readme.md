@@ -39,6 +39,7 @@ $ ./WuseMediaServer.exe
 ## 📓 Todo
 - Fix ``cmake-windows.yml`` action;
 - Expose the server to an HTTPS api;
+- Write tests and add code coverage analysis;
 
 ## 🤝 Contributing
 
