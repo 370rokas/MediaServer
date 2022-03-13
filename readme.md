@@ -1,6 +1,12 @@
 # Media Server
-![Cmake-Ubuntu](https://github.com/370rokas/MediaServer/actions/workflows/cmake-ubuntu.yml/badge.svg)
-![CodeCov-Master](https://codecov.io/gh/370rokas/MediaServer/branch/master/graph/badge.svg)
+![](https://img.shields.io/github/license/370rokas/MediaServer)
+![](https://img.shields.io/github/workflow/status/370rokas/MediaServer/Build-Ubuntu?label=build-ubuntu)
+![](https://img.shields.io/github/issues/370rokas/MediaServer)
+![](https://img.shields.io/github/languages/count/370rokas/MediaServer)
+![](https://img.shields.io/github/languages/top/370rokas/MediaServer)
+![](https://img.shields.io/github/repo-size/370rokas/MediaServer)
+
+
 
 **Author:** 370rokas
 

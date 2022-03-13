@@ -18,7 +18,6 @@ jobs:
         sudo apt-get install ninja-build -y
         sudo apt-get install xorg-dev
         sudo apt-get install freeglut3-dev
-        sudo apt-get install gcovr
 
     - name: Configure CMake
       shell: bash
@@ -34,13 +33,3 @@ jobs:
       working-directory: ${{github.workspace}}/
       shell: bash
       run: ctest --extra-verbose
-
-    - name: Generate Code Coverage
-      working-directory: ${{github.workspace}}/
-      shell: bash
-      run: gcovr -r . -x -o coverage.xml
-
-    - uses: codecov/codecov-action@v2
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        files: ./coverage.xml
