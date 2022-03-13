@@ -38,7 +38,7 @@ jobs:
     - name: Generate Code Coverage
       working-directory: ${{github.workspace}}/
       shell: bash
-      run: gcovr -r . -i -x -o coverage.xml
+      run: gcovr -r . -x -o coverage.xml
 
     - uses: codecov/codecov-action@v2
       with:
