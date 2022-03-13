@@ -37,6 +37,9 @@ Pre-built binaries of stable versions will be available in the Releases section 
 $ ./WuseMediaServer.exe
 ```
 
+## 📓 Todo
+- Fix ``cmake-windows.yml`` action;
+- Expose the server to an HTTPS api;
 
 ## 🤝 Contributing
 

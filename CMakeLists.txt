@@ -41,17 +41,26 @@ else()
 endif()
 # ---- SQLite3
 
+# ---- IMGUI & SDL
+FetchContent_Declare(
+        imgui
+        GIT_REPOSITORY https://github.com/Pesc0/imgui-cmake
+)
+FetchContent_MakeAvailable(imgui)
+# ---- IMGUI & SDL
+
 #### WuseMediaServer
 
 set(WuseMediaServer_Sources
         "src/Main.cpp"
         "src/Config.cpp"
         "src/Database/Database.cpp"
-        "src/Database/DatabaseControl.cpp")
+        "src/Database/DatabaseControl.cpp"
+        "src/GUI/Console.cpp")
 
-add_executable(WuseMediaServer ${WuseMediaServer_Sources} "src/Database/DatabaseControl.cpp")
+add_executable(WuseMediaServer ${WuseMediaServer_Sources})
 
-target_link_libraries(WuseMediaServer ${SQLite3_LIBRARIES} taocpp-json lua_static)
+target_link_libraries(WuseMediaServer ${SQLite3_LIBRARIES} taocpp-json lua_static IMGUI)
 target_include_directories(WuseMediaServer PRIVATE ${SQLite3_INCLUDE_DIRS} include/)
 
 set_target_properties(WuseMediaServer PROPERTIES

@@ -3,9 +3,10 @@
 #include <lua.hpp>
 
 #include "Config.hpp"
+#include "GUI/Console.hpp"
 #include "Database/DatabaseControl.hpp"
 
-bool run = true;
+bool* run_cli = new bool(true);
 
 int main() {
     using namespace tao;
@@ -28,8 +29,15 @@ int main() {
     auto CreatedFile = DB::CreateFile(db, "config.json", Settings.at("FileStorageLocation").get_string());
     std::cout << CreatedFile.second << std::endl;
 
-    int err;
-    while (run) {
+    Console console;
+    console.Run();
+    /*int err;
+
+    Console console;
+    console.RunConsole(run_cli);
+
+    while (run_cli) {};
+    while (run_cli) {
         std::string input;
         std::cin >> input;
 
@@ -40,8 +48,7 @@ int main() {
                 lua_pop(L, 1);
             }
         }
-    }
+    }*/
 
     lua_close(L);
-    return 0;
 }
